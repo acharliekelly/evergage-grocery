@@ -19,6 +19,7 @@ class Cart {
 
         // check for valid params
         if (product && quantity) {
+
           // log product
           console.log('Product: ' + product.id)
           // check if product is in stock
@@ -34,10 +35,13 @@ class Cart {
               }
             })
             .catch(e => {
+              // if call produces error, log and return false
               console.error(e)
               return false
             })
         } else {
+
+          // if product or quantity params missing, just return cart text
           console.log('incomplete parameters')
           return this.getCartText()
         }
@@ -49,14 +53,20 @@ class Cart {
         if (typeof product === 'undefined' || typeof quantity === 'undefined') {
           return this.getCartText()
         } else {
+          // new item to store in cart
           const item = {
             id: product.id,
             qty: parseInt(quantity)
           }
+          // add item to cart
           this._data.items.push(item)
+          // update card quantity
           this._data.count += item.qty
+          // update cart value
           this._data.value += (item.qty * product.price)
+          // log all items to console
           this.logCartContents()
+          // return cart text
           return this.getCartText()
         }
     }
