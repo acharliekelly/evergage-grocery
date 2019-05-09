@@ -14,10 +14,12 @@ class Cart {
     }
 
     addToCart(product, quantity) {
-      console.log('Adding to cart')
       // create promise
       return new Promise((resolve, reject) => {
+
+        // check for valid params
         if (product && quantity) {
+          // log product
           console.log('Product: ' + product.id)
           // check if product is in stock
           Avail.inStock(product)
@@ -28,16 +30,16 @@ class Cart {
                 resolve(this.updateCart(product, quantity))
               } else {
                 console.log('Product out of stock.')
-                reject(false)
+                return false
               }
             })
-            .catch(() => {
-              console.log('Out of stock')
-              reject(false)
+            .catch(e => {
+              console.error(e)
+              return false
             })
         } else {
           console.log('incomplete parameters')
-          reject(this.getCartText())
+          return this.getCartText()
         }
       })
     }
